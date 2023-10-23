@@ -1,10 +1,11 @@
-CREATE TABLE user (
-  mid SERIAL PRIMARY KEY,--unique
+create table if not exists users (
+  mid BIGINT PRIMARY KEY,--unique
   name VARCHAR(30) NOT NULL, --<=16
   sex VARCHAR(2),
-  birthday DATE,
+  birthday VARCHAR,
   level INTEGER,
   sign TEXT,
+following BIGINT[],
   identity VARCHAR(10)--user or superuser
 );
 
