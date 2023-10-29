@@ -11,12 +11,12 @@ CREATE TABLE Users (
   CONSTRAINT check_level_range CHECK (level >= 0 AND level <= 6)
 );
 
---无名的人导进去了
-select mid,name from Users where mid='1968094';
---总 37881
-select count(*) from Users;
---名字最长的人有24个字符：ScriptManager.clearTimer
-SELECT * FROM users ORDER BY LENGTH(name) DESC LIMIT 1;
+-- --无名的人导进去了
+-- select mid,name from Users where mid='1968094';
+-- --总 37881
+-- select count(*) from Users;
+-- --名字最长的人有24个字符：ScriptManager.clearTimer
+-- SELECT * FROM users ORDER BY LENGTH(name) DESC LIMIT 1;
 
 CREATE TABLE Follow (
   follow_id SERIAL PRIMARY KEY,
@@ -41,39 +41,39 @@ CREATE TABLE Video (
   FOREIGN KEY (reviewer_mid) REFERENCES Users(mid)
 );
 
--- Like 表
+-- thumbs_up 表
 CREATE TABLE thumbs_up (
-  thumbs_up_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20)NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
+  primary key (video_BV,user_mid),
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- Coin 表
 CREATE TABLE Coin (
-  coin_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20) NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
+  primary key (video_BV,user_mid),
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- Favorite 表
 CREATE TABLE Favorite (
-  favorite_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20) NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
+  primary key (video_BV,user_mid),
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- View 表
 CREATE TABLE View (
-  view_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20),
   user_mid VARCHAR(25),
   last_watch_time_duration INTEGER,
+  primary key (video_BV,user_mid),
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
@@ -88,3 +88,4 @@ CREATE TABLE Danmu (
   FOREIGN KEY (BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
+-- insert into danmu (BV,user_mid,time,content) values ('BV11B4y1u7oY','1624790','455.918','我感觉自己的心理疾病80%是家人壁出来的');
