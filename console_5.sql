@@ -1,9 +1,9 @@
 -- User 表
 CREATE TABLE Users (
   mid VARCHAR(25) PRIMARY KEY,
-  name VARCHAR(20) NOT NULL,--最长16
+  name TEXT NOT NULL,--最长16
   sex VARCHAR(5),
-  birthday DATE,
+  birthday VARCHAR(10),
   level INT,
   sign TEXT,
   identity VARCHAR(10) NOT NULL,
@@ -11,12 +11,20 @@ CREATE TABLE Users (
   CONSTRAINT check_level_range CHECK (level >= 0 AND level <= 6)
 );
 
+--无名的人导进去了
+select mid,name from Users where mid='1968094';
+--总 37881
+select count(*) from Users;
+--名字最长的人有24个字符：ScriptManager.clearTimer
+SELECT * FROM users ORDER BY LENGTH(name) DESC LIMIT 1;
+
 CREATE TABLE Follow (
   follow_id SERIAL PRIMARY KEY,
-  follower_mid VARCHAR(25) NOT NULL ,
+  follower_mid VARCHAR(25) NOT NULL,
   following_mid VARCHAR(25) NOT NULL,
   FOREIGN KEY (follower_mid) REFERENCES Users(mid),
-  FOREIGN KEY (following_mid) REFERENCES Users(mid)
+  FOREIGN KEY (following_mid) REFERENCES Users(mid),
+  UNIQUE(follower_mid, following_mid)
 );
 -- Video 表
 CREATE TABLE Video (
@@ -34,8 +42,8 @@ CREATE TABLE Video (
 );
 
 -- Like 表
-CREATE TABLE Favorite (
-  favorite_id SERIAL PRIMARY KEY,
+CREATE TABLE thumbs_up (
+  thumbs_up_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20)NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
@@ -75,7 +83,7 @@ CREATE TABLE Danmu (
   danmu_id SERIAL PRIMARY KEY,
   BV VARCHAR(20),
   user_mid VARCHAR(25),
-  time TIMESTAMP,
+  time VARCHAR(10),
   content TEXT,
   FOREIGN KEY (BV) REFERENCES Video(BV),
   FOREIGN KEY (user_mid) REFERENCES Users(mid)
