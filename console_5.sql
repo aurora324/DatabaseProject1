@@ -1,5 +1,5 @@
 -- User 表
-CREATE TABLE User (
+CREATE TABLE Users (
   mid VARCHAR(25) PRIMARY KEY,
   name VARCHAR(20) NOT NULL,--最长16
   sex VARCHAR(5),
@@ -15,8 +15,8 @@ CREATE TABLE Follow (
   follow_id SERIAL PRIMARY KEY,
   follower_mid VARCHAR(25) NOT NULL ,
   following_mid VARCHAR(25) NOT NULL,
-  FOREIGN KEY (follower_mid) REFERENCES User(mid),
-  FOREIGN KEY (following_mid) REFERENCES User(mid)
+  FOREIGN KEY (follower_mid) REFERENCES Users(mid),
+  FOREIGN KEY (following_mid) REFERENCES Users(mid)
 );
 -- Video 表
 CREATE TABLE Video (
@@ -29,17 +29,17 @@ CREATE TABLE Video (
   duration INTEGER,
   description TEXT,
   reviewer_mid VARCHAR(25),
-  FOREIGN KEY (owner_mid) REFERENCES User(mid),
-  FOREIGN KEY (reviewer_mid) REFERENCES User(mid)
+  FOREIGN KEY (owner_mid) REFERENCES Users(mid),
+  FOREIGN KEY (reviewer_mid) REFERENCES Users(mid)
 );
 
 -- Like 表
-CREATE TABLE Like (
-  like_id SERIAL PRIMARY KEY,
+CREATE TABLE Favorite (
+  favorite_id SERIAL PRIMARY KEY,
   video_BV VARCHAR(20)NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
-  FOREIGN KEY (user_mid) REFERENCES User(mid)
+  FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- Coin 表
@@ -48,7 +48,7 @@ CREATE TABLE Coin (
   video_BV VARCHAR(20) NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
-  FOREIGN KEY (user_mid) REFERENCES User(mid)
+  FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- Favorite 表
@@ -57,7 +57,7 @@ CREATE TABLE Favorite (
   video_BV VARCHAR(20) NOT NULL ,
   user_mid VARCHAR(25) NOT NULL ,
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
-  FOREIGN KEY (user_mid) REFERENCES User(mid)
+  FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- View 表
@@ -67,7 +67,7 @@ CREATE TABLE View (
   user_mid VARCHAR(25),
   last_watch_time_duration INTEGER,
   FOREIGN KEY (video_BV) REFERENCES Video(BV),
-  FOREIGN KEY (user_mid) REFERENCES User(mid)
+  FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
 
 -- Danmu 表
@@ -78,5 +78,5 @@ CREATE TABLE Danmu (
   time TIMESTAMP,
   content TEXT,
   FOREIGN KEY (BV) REFERENCES Video(BV),
-  FOREIGN KEY (user_mid) REFERENCES User(mid)
+  FOREIGN KEY (user_mid) REFERENCES Users(mid)
 );
